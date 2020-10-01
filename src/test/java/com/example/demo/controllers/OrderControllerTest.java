@@ -61,4 +61,27 @@ public class OrderControllerTest {
         assertEquals("testDescription", order.getItems().get(0).getDescription());
         assertEquals(BigDecimal.ZERO, order.getItems().get(0).getPrice());
     }
+
+    @Test
+    public void submitOrderFailure() {
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("test");
+        Cart cart = new Cart();
+
+        Item item = new Item();
+        item.setId(1L);
+        item.setName("testItem");
+        item.setDescription("testDescription");
+        item.setPrice(BigDecimal.ZERO);
+
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+        cart.setItems(items);
+        user.setCart(cart);
+        when(userRepo.findByUsername(user.getUsername())).thenReturn(user);
+
+        final ResponseEntity<UserOrder> response = orderController.submit("test2");
+        Assert.assertEquals(404, response.getStatusCodeValue());
+    }
 }

@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.shortThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +50,16 @@ public class UserControllerTest {
         assertEquals(0, u.getId());
         assertEquals("test", u.getUsername());
         assertEquals("thisIsHashed", u.getPassword());
+    }
+
+    @Test
+    public void createUserFailure() throws Exception {
+        CreateUserRequest r = new CreateUserRequest();
+        r.setUsername("test2");
+        r.setPassword("test2");
+        r.setConfirmPassword("test");
+        final ResponseEntity<User> response = userController.createUser(r);
+        Assert.assertEquals(400, response.getStatusCodeValue());
     }
 
     @Test

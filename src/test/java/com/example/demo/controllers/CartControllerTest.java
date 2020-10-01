@@ -68,5 +68,4 @@ public class CartControllerTest {
         Assert.assertEquals("testItem", cart.getItems().get(0).getName());
         Assert.assertEquals("testDescription", cart.getItems().get(0).getDescription());
     }
-
 }
